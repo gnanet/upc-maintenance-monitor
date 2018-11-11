@@ -2,7 +2,7 @@
 
 ## About
 
-UPC Maintenance Monitor is an open source monitoring tool for scheduled maintenances of the hungarian cable provider UPC. It monitors the maintenance schedule webpage and emails you when a maintenance is scheduled for the town/city you providede to look for.
+UPC Maintenance Monitor is an open source monitoring tool for scheduled maintenances of the hungarian cable provider UPC. It monitors the maintenance schedule webpage and emails you when a maintenance is scheduled for the town/city you provided.
 
 See the example site: https://www.do01.r-us.hu/upc-karb/
 
@@ -54,6 +54,8 @@ Also change the `$current_domain` variable, it is used in all the email addresse
 And `$current_link`, which may or may not be the same. It is used in the confirm and unsubscribe links, and depends on your webserver configuration. `example.com/subdir` here means your unsubscribe links will start `https://example.com/subdir/unsubscribe.php`.
 
     $current_link = "www.do01.r-us.hu/upc-maintenance-monitor";
+
+Visit https://`$current_link`/lib/telepulesnevek.php one time, to generate the autocomplete data.
 
 Set up the cronjob to run once a day:
 
