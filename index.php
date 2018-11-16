@@ -36,7 +36,7 @@ if ( ! empty($_POST) ) {
         $html = file_get_html($karbsave);
     }
 
-    $karbresult =  "<table>\n";
+    $karbresult =  "<table class='table table-striped' id='searchresults'>\n";
     foreach($html->find('tr') as $el) {
         if ( (strpos($el->find('td',3)->innertext,$searchCity) !== false ) || (strpos($el->innertext,'<th>') !== false ) ) {
             $datetime1 = date_create('@'.time());
@@ -106,13 +106,14 @@ if ( ! empty($_POST) ) {
         <p>A kereső a hivatalos UPC karbantartások oldal  [<a href="https://www.upc.hu/segithetunk/hasznos-tudnivalok/karbantartasok/" target="_blank">https://www.upc.hu/segithetunk/hasznos-tudnivalok/karbantartasok/</a>] tartalmából a karbantartások táblázatot elemzi, a gyors működés érdekében ideiglenesen eltárolja. A településlistát a posta.hu oldalon elérhető irányítószám táblázatból generáljuk.</p>
         <p>Lehetőséged van az emailcímed és a figyelendő településnév megadásával automatikus értesítő-emailekre feliratkozni, ezt a menüből az <a href="createmonitor.php">Értesítés igénylése</a> pontban kezdeményezheted.</p>
     </div>
-  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+  <form id="searchform" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
     <div class="input-group" style="margin-bottom: 10px;">
         <span id="loc-label" class="input-group-addon">Keresendő város:</span>
         <input type="text" size="50" maxlength="254" name="loc" id="loc" class="form-control" aria-describedby="loc-label" data-remote-list="data/telepulesnevek.json" data-list-highlight="true" data-list-value-completion="true" autocomplete="no" <?php if ( isset($searchCity) ) { echo ' value="'.$searchCity.'" '; }?> />
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Keress</button>
+        <button type="reset" value="reset" onclick="clearform()" class="btn btn-danger">Visszaállít</button>
     </div>
   </form>
 </div>
@@ -124,6 +125,12 @@ if ( ! empty($_POST) ) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/remote-list.min.js"></script>
 <script>
+    function clearform() {
+        document.getElementById("loc").setAttribute('value', '');
+        document.getElementById("searchresults").outerHTML = '';
+        document.getElementById("loc").focus();
+    };
+
     $(function () {
         $('input#loc').remoteList({
             minLength: 0,

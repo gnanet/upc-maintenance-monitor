@@ -16,7 +16,9 @@
 $aboutsvc = "This is a service which monitors the UPC Maintenance website, and notifies you when a maintenance is scheduled for your location. This extra notification helps you remember to prepare for the maintenance on time.\r\n\r\n";
 
 function touch_json($fileparam) {
-    error_log("touch_json called with ".$fileparam);
+    if (php_sapi_name() != "cli") {
+        error_log("touch_json called with ".$fileparam);
+    }
     if ( ! @file_exists($fileparam) ) {
         file_put_contents($fileparam,'');
         error_log("touch_json created ".$fileparam);
