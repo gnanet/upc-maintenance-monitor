@@ -21,7 +21,7 @@ if (php_sapi_name() == "cli") {
     require('lib/settings.php');
 
     $url = 'https://www.upc.hu/segithetunk/hasznos-tudnivalok/karbantartasok/';
-    $karbsave = 'data/upc-karb.html.snip';
+    $karbsave = __DIR__ . '/data/upc-karb.html.snip';
 
   $removal_queue = array();
   $tmp_check_file = $check_file . ".tmp";
