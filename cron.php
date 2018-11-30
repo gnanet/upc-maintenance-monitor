@@ -32,15 +32,20 @@ if (php_sapi_name() == "cli") {
 
   $file = file_get_contents($tmp_check_file);
   if ($file === FALSE) {
-    $result['errors'][] = "Can't open database.";
+    echo "Can't open database.\n";
+    @unlink($tmp_check_file);
+    die();
   }
   $json_a = json_decode($file, true);
   if ($json_a === null && json_last_error() !== JSON_ERROR_NONE) {
-    $result['errors'][] = "Can't read database: " . htmlspecialchars(json_last_error());
+    echo "Can't read database: " . htmlspecialchars(json_last_error())."\n";
+    @unlink($tmp_check_file);
+    die();
   }
 
   if (count($json_a) == 0) {
     echo "Empty checklist.\n";
+    @unlink($tmp_check_file);
     die();
   }
 
@@ -121,6 +126,7 @@ if (php_sapi_name() == "cli") {
   }
 // ENDFOREACH
 
+  @unlink($tmp_check_file);
   echo "===== end " . date('Y-m-d H:i:s') . "=====\n";
 
 
@@ -150,16 +156,19 @@ if (php_sapi_name() == "cli") {
   $tmp_pre_file = file_get_contents($tmp_pre_check_file);
   if ($tmp_pre_file === FALSE) {
     echo "Can't open database.\n";
+    @unlink($tmp_pre_check_file);
     die();
   }
   $tmp_pre_json_a = json_decode($tmp_pre_file, true);
   if ($tmp_pre_json_a === null && json_last_error() !== JSON_ERROR_NONE) {
     echo "Can't read database.\n";
+    @unlink($tmp_pre_check_file);
     die();
   }
 
   if (count($tmp_pre_json_a) == 0) {
     echo "Empty pre-checklist.\n";
+    @unlink($tmp_pre_check_file);
     die();
   }
 
@@ -178,8 +187,11 @@ if (php_sapi_name() == "cli") {
     }
   }
 
+  // remove temporary files
+  @unlink($tmp_check_file);
+  @unlink($tmp_pre_check_file);
 } else {
-  header('HTTP/1.0 301 Moved Permanently');  
+  header('HTTP/1.0 301 Moved Permanently');
   header('Location: /');
 }
 
