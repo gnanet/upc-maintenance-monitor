@@ -87,6 +87,9 @@ if (php_sapi_name() == "cli") {
 
     foreach ($maintenance as $maint_key => $maint_value) {
       echo html_entity_decode("\tMaintenance scheduled for " . $maint_value['location'] . ". start date: " . date("Y-m-d H:i:s T", $maint_value['start']) . ". affected services: " . $maint_value['type'] . " " .$maint_value['services']. "\n");
+      $dtDest = new DateTime('@'.$maint_value['start']);
+      $dtNow = new DateTime('now');
+      echo "\tTime until maintenance: ".$dtNow->diff($dtDest)->format('%a days, %h hours, %i minutes and %s seconds')."\n";
       maintenance_notification_emails($varos, $email, $maint_value);
     }
 
