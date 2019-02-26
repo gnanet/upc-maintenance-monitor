@@ -1,5 +1,9 @@
 # UPC Maintenance Monitor
 
+# NOT WORKING because UPC removed the HTML table, only a PDF can be downloaded
+
+## Please wait until i can finish the pdf-parser.
+
 ## About
 
 UPC Maintenance Monitor is an open source monitoring tool for scheduled maintenances of the hungarian cable provider UPC. It monitors the maintenance schedule webpage and emails you when a maintenance is scheduled for the town/city you provided.
